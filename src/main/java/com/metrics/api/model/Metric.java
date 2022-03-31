@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -21,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="cpu_metrics")
+@Table(name="data_metrics")
 public class Metric {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,15 +38,19 @@ public class Metric {
 	@Column(name = "metric_value", nullable = false)
 	private Long metric_value;
 	
+	@CreationTimestamp
 	@Column(name = "time_stamp", nullable = false)
 	private Timestamp timeStamp;
+	
+	@Column(name = "timestamp", nullable = false)
+	private Long unixTime;
 	
 	public Metric(String hostName, String m_n, Long m_v) {
 		super();
 		this.hostName = hostName;
 		this.metric_name = m_n;
 		this.metric_value = m_v;
-		this.timeStamp = new Timestamp(System.currentTimeMillis());
+		unixTime = System.currentTimeMillis() / 1000L;
 	}
 }
 
