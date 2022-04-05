@@ -1,5 +1,7 @@
 package com.metrics.api.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
@@ -45,6 +47,37 @@ public class MetricServiceImpl implements metricService{
 		mR.save(object);
 		
 		return "Data inserted Succesfully \n";
+	}
+	
+	@Override
+	public String multipleInsertion() {
+		
+		String[] hosts = {"xyz.bmc.com", "abc.bmc.com"};
+		String[] metric_name = {"cpu", "memory"};
+		Random random = new Random();  
+		int rows = random.nextInt(10);
+		
+		List<Metric> objectList = new ArrayList<Metric>();
+		
+		for(int i = 0; i < rows; i++) {
+			int m_index = random.nextInt(2);   
+			int h_index = random.nextInt(2);
+			
+			Long value;
+			
+			if(m_index == 0)
+				value = Math.abs(random.nextLong() % 100);
+			else
+				value = Math.abs(random.nextLong() % 100000000);
+			
+//			objectList[i] = new Metric(hosts[h_index],metric_name[m_index], value);
+			Metric object = new Metric(hosts[h_index],metric_name[m_index], value);
+			objectList.add(object);
+		}
+		
+		mR.saveAll(objectList);
+		
+		return "All rows inserted Succesfully \n";
 	}
 
 }

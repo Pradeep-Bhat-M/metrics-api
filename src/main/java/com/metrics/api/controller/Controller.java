@@ -21,14 +21,19 @@ public class Controller {
 		this.mS = mS;
 	}
 	
+	@GetMapping("/test")
+	public ResponseEntity<String> test() {
+		return new ResponseEntity<String>("Test Succesfull!! \n", HttpStatus.ACCEPTED);
+	}
+	
 	@PostMapping("/add")
 	public ResponseEntity<String> addMetric() {
 		return new ResponseEntity<String>(mS.insertMetric(), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/test")
-	public ResponseEntity<String> test() {
-		return new ResponseEntity<String>("Test Succesfull!! \n", HttpStatus.ACCEPTED);
+	@PostMapping("/add-list")
+	public ResponseEntity<String> multipleInsertion() {
+		return new ResponseEntity<String>(mS.multipleInsertion(), HttpStatus.CREATED);
 	}
 }
 
