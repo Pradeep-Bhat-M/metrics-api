@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,18 +21,17 @@ import io.micrometer.core.instrument.MeterRegistry;
 
 @RestController
 @RequestMapping("/metrics")
-@ManagedResource(objectName="newMBeans:category=MBeans,name=testBean")
 public class Controller {
 	private metricService mS;
 	
-	final Counter totalHits;
+//	final Counter totalHits;
 //    public Controller(MeterRegistry registry){
 //        totalHits = registry.counter("newMBeanCounter");
 //    }
 
-	public Controller(MeterRegistry registry, metricService mS) {
+	public Controller(metricService mS) {
 		super();
-		this.totalHits = registry.counter("newMBeanCounter");
+//		this.totalHits = registry.counter("newMBeanCounter");
 		this.mS = mS;
 	}
 	
@@ -40,9 +40,9 @@ public class Controller {
 		return new ResponseEntity<String>("Test Succesfull!! \n", HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/get-metric")
-	public ResponseEntity<Metric> getMetric() {
-		return new ResponseEntity<Metric>(mS.returnMetric(), HttpStatus.CREATED);;
+	@GetMapping("/get-metric/{id}")
+	public ResponseEntity<Metric> getMetric(@PathVariable("id") long id) {
+		return new ResponseEntity<Metric>(mS.returnMetric(id), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/add")
@@ -57,10 +57,10 @@ public class Controller {
 		return new ResponseEntity<String>(mS.multipleInsertion(), HttpStatus.CREATED);
 	}
 	
-	@ManagedOperation
-    public String getTotalHits() throws InterruptedException {
-        return "Total Hits = " + totalHits.count();
-    }
+//	@ManagedOperation
+//    public String getTotalHits() throws InterruptedException {
+//        return "Total Hits = " + totalHits.count();
+//    }
 }
 
 	

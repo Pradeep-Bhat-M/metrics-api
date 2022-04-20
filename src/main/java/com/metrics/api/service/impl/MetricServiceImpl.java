@@ -2,6 +2,7 @@ package com.metrics.api.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
@@ -78,6 +79,12 @@ public class MetricServiceImpl implements metricService{
 		mR.saveAll(objectList);
 		
 		return "All rows inserted Succesfully \n";
+	}
+
+	@Override
+	public Metric returnMetric(long id) {
+		// TODO Auto-generated method stub
+		return mR.findById(id).orElseThrow();
 	}
 
 }
