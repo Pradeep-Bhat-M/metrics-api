@@ -55,7 +55,7 @@ public class MetricServiceImpl implements metricService{
 		String[] hosts = {"xyz.bmc.com", "abc.bmc.com"};
 		String[] metric_name = {"cpu", "memory"};
 		Random random = new Random();  
-		int rows = random.nextInt(10);
+		int rows = random.nextInt(10) + 1;
 		
 		List<Metric> objectList = new ArrayList<Metric>();
 		
