@@ -1,5 +1,6 @@
 package com.metrics.api.controller;
 
+//import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import com.metrics.api.service.metricService;
 @RequestMapping("/metrics")
 public class Controller {
 	private metricService mS;
+//	@Value("${prometheus}")
+//	public String v;
 
 	public Controller(metricService mS) {
 		super();
@@ -24,6 +27,10 @@ public class Controller {
 	
 	@GetMapping("/test")
 	public ResponseEntity<String> test() {
+		
+		
+//		System.out.println(v);
+//		System.out.println("${prometheus}");
 		return new ResponseEntity<String>("Test Succesfull!! \n", HttpStatus.ACCEPTED);
 	}
 	
